@@ -1,5 +1,5 @@
 # Projeto 6 - Capstone
-🔗[Dashboard do Projeto](projeto6-Capstone.pdf)
+🔗[Dashboard do Projeto](Projeto6-Capstone.pdf)
 ## Sobre o Projeto
 O objetivo deste projeto foi escolher uma base de dados e aplicar os conhecimentos que adquiri durante a jornada de aprendizado.
 
