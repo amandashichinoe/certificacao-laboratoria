@@ -1,4 +1,6 @@
 # Projeto 4 - Análise de Cancelamento Hoteleiro
+🔗[Dashboard do Projeto](Projeto04-Analise_Cancelamento_Hoteleiro.pdf)
+
 
 ## Sobre o Projeto
 O objetivo deste projeto foi realizar uma análise das reservas de uma empresa hoteleira fictícia que realiza o pagamento de uma taxa de marketing de 1.5 USD por reserva realizada, e através dos dados fornecidos entender:

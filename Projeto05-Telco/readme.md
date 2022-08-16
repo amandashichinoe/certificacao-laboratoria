@@ -1,5 +1,5 @@
 # Projeto 5 -  Análise de Churn em uma Empresa de Telecomunicações
-
+🔗[Dashboard do Projeto](projeto05-Telco.pdf)
 ## Sobre o Projeto
 
 O objetivo deste projeto foi realizar uma análise descritiva dos clientes de uma empresa fictícia de telecomunicações, e a partir destes dados entender melhor as suposições levantadas pelo Chief Growth Officer da empresa e realizar as segmentações definidas para entender melhor a perda de clientes, e a partir destas segmentações, identificar quais os clientes que possuem um alto valor monetário e possuem maior risco de sair.

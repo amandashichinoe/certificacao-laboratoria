@@ -10,7 +10,7 @@
 CREATE OR REPLACE TABLE `projeto05-telco.dataset_telco.master_churn_table` AS
 SELECT *,
 CONCAT(Latitude, ',', Longitude) AS Lat_Long
-FROM `projeto05-telco.dataset_telco.master_churn_table`
+FROM `projeto05-telco.dataset_telco.master_churn_table`;
 
 --- Utilizando join para unir todas as tabelas em uma tabela única
 CREATE TABLE `projeto05-telco.dataset_telco.churn_analysis`  AS (
@@ -35,7 +35,7 @@ LEFT JOIN `projeto05-telco.dataset_telco.churn_services` c
 ON b.Customer_ID=c.Customer_ID
 LEFT JOIN `projeto05-telco.dataset_telco.churn_status` d
 ON c.Customer_ID=d.Customer_ID
-)		 
+);		 
 
 --- Contando o número de registros
 SELECT COUNT(*) AS total_registros
@@ -91,7 +91,7 @@ SELECT City, COUNT(Customer_ID) AS total_clientes
 FROM `projeto05-telco.dataset_telco.master_churn`
 GROUP BY 1
 ORDER BY 2 DESC 
-LIMIT 5
+LIMIT 5;
 
 /*markdown
 ### Limpeza de Dados da Tabela
@@ -113,7 +113,7 @@ ELSE Gender END as Gender
 FROM `projeto05-telco.dataset_telco.master_churn`
 WHERE Age<=80
 AND Monthly_Charge > 0
-)
+);
 
 /*markdown
 ### Desenvolvimento de mais Análises Descritivas
@@ -128,18 +128,18 @@ WITH tabela AS ( --- WITH permite criar tabelas temporárias
     WHEN Age BETWEEN 41 AND 60 THEN '2. 41 a 60 anos' 
     ELSE '3. Más de 60 años' 
     END AS range_age
-    FROM `projeto.dataset.tabela`
+    FROM `projeto.dataset.tabela`;
 )
 SELECT range_age, COUNT(DISTINCT Customer_ID) AS total_clientes
 FROM tabela 
-GROUP BY range_age
+GROUP BY range_age;
 
 --- TOP 5 Cidades com o Maior número de clientes
 SELECT COUNT(DISTINCT Customer_ID) AS total_clientes, City
 FROM `projeto05-telco.dataset_telco.master_churn_table` 
 GROUP BY City
 ORDER BY total_clientes DESC
-LIMIT 5
+LIMIT 5;
 
 --- Adicionando coluna criada à tabela master_churn
 CREATE OR REPLACE TABLE `projeto05-telco.dataset_telco.master_churn_table`
@@ -150,7 +150,7 @@ SELECT *,
     WHEN Age BETWEEN 41 AND 60 THEN '41 a 60 anos' 
     ELSE '61 anos ou mais' 
     END AS range_age
-    FROM `projeto05-telco.dataset_telco.master_churn_table`
+    FROM `projeto05-telco.dataset_telco.master_churn_table`;
 
 --- Identificando se as pessoas casadas tem alguma relação com o número de referências
 --- Categorização: 0 referências / 1 a 4 referências / 5 a 8 referências / 9 ou mais referências
@@ -165,7 +165,7 @@ CASE
 FROM `projeto05-telco.dataset_telco.master_churn_table`)
 SELECT COUNT(*) AS total_clientes, Married, range_referencias
 FROM tabela
-GROUP BY Married, range_referencias
+GROUP BY Married, range_referencias;
 
 --- Adicionando coluna range_referencias à tablena master_churn
 CREATE OR REPLACE TABLE `projeto05-telco.dataset_telco.master_churn_table` AS
@@ -176,7 +176,8 @@ CASE
   WHEN Number_of_Referrals BETWEEN 5 AND 8 THEN '5 a 8 referências'
   ELSE '9 ou mais referências'
   END range_referencias
-FROM `projeto05-telco.dataset_telco.master_churn_table`
+FROM `projeto05-telco.dataset_telco.master_churn_table`;
+
 
 
 --- Adicionando coluna range_referencias à tablena master_churn
@@ -188,7 +189,7 @@ CASE
   WHEN Number_of_Referrals BETWEEN 5 AND 8 THEN '5 a 8 referências'
   ELSE '9 ou mais referências'
   END range_referencias
-FROM `projeto05-telco.dataset_telco.master_churn_table`
+FROM `projeto05-telco.dataset_telco.master_churn_table`;
 
 --- Criando categorias para os clientes, conforme as suposições levantadas na reunião do projeto
 CREATE OR REPLACE  TABLE `projeto05-telco.dataset_telco.master_churn_table` AS (
@@ -203,17 +204,17 @@ SELECT
 END AS risk_group
 
 FROM `projeto05-telco.dataset_telco.master_churn_table`
-)
+);
 
 --- Calculando risco de churn por grupo
 SELECT AVG(Churn_Value) churn_rate, risk_group
 FROM `projeto05-telco.dataset_telco.master_churn_table`
-GROUP BY risk_group
+GROUP BY risk_group;
 
 --- Tempo médio de retenção por tipo de contrato
 SELECT Contract,AVG(Tenure_in_Months) AS media_retencao_meses
 FROM `projeto05-telco.dataset_telco.master_churn_table`
-GROUP BY Contract
+GROUP BY Contract;
 
 /*markdown
 ### Valor dos Clientes
@@ -231,13 +232,13 @@ SELECT a.*,
 FROM `projeto05-telco.dataset_telco.master_churn_table` a
 LEFT JOIN base_tenure_prom b
 ON a.Contract = b.Contract
-)
+);
 
 --- Calculando e adicionando coluna ingresso_estimado (receita estimada)
 CREATE OR REPLACE TABLE `projeto05-telco.dataset_telco.master_churn_table` AS
 SELECT *,
     media_tenure*Total_Revenue/3 AS ingreso_estimado
-FROM `projeto05-telco.dataset_telco.master_churn_table` a
+FROM `projeto05-telco.dataset_telco.master_churn_table` a;
 
 --- Criação de tabela Quartis que contém apenas os clientes que não se desligaram
 --- e calculando o quartil_estimado
@@ -251,7 +252,7 @@ CREATE OR REPLACE TABLE `projeto05-telco.dataset_telco.quartis` AS
 --- Criacao de uma tabela cliente_id quartis
 CREATE OR REPLACE TABLE `projeto05-telco.dataset_telco.table_quartis` AS 
 (SELECT Customer_ID, quartil_estimado
-FROM `projeto05-telco.dataset_telco.quartis`)
+FROM `projeto05-telco.dataset_telco.quartis`);
 
 /*markdown
 Os clientes que recebem um quartil mais alto (calculado com base na Receita Total) representam uma Receita Total alta, sendo assim, a receita futura que eles podem gerar é muito alta em comparação com os outros quartis.
@@ -265,7 +266,7 @@ SELECT Contract,
 FROM `projeto05-telco.dataset_telco.quartis` 
 WHERE quartil_estimado IN (3,4)
 GROUP BY 1,2
-ORDER BY 1
+ORDER BY 1;
 
 /*markdown
 O próximo passo foi importar estes dados utilizando na ferramenta Microsoft Power BI para gerar as visualizações e análises.
